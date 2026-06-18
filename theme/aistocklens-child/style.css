@@ -996,20 +996,23 @@ img { max-width: 100%; height: auto; display: block; }
 /* Breadcrumb inside any colored hero — override default dark-blue palette */
 .asl-learn-hero .asl-breadcrumb {
     color: rgba(255,255,255,.7);
-    justify-content: center; /* align pills to match centered heading */
+    justify-content: center;
 }
-.asl-learn-hero .asl-breadcrumb a {
-    color: rgba(255,255,255,.9);
+.asl-learn-hero .asl-breadcrumb a,
+.asl-learn-hero .asl-breadcrumb a:visited,
+.asl-learn-hero .asl-breadcrumb a:link {
+    color: #fff !important;
+    text-decoration: none;
 }
 .asl-learn-hero .asl-breadcrumb a:hover {
-    color: #fff;
+    color: #fff !important;
     text-decoration: underline;
 }
 .asl-learn-hero .asl-breadcrumb__sep {
-    color: rgba(255,255,255,.45);
+    color: rgba(255,255,255,.5) !important;
 }
 .asl-learn-hero .asl-breadcrumb [aria-current="page"] {
-    color: rgba(255,255,255,.65);
+    color: rgba(255,255,255,.7) !important;
 }
 
 .asl-module-card {

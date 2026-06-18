@@ -103,7 +103,7 @@ function aslt_render_ad( $position, $echo = true ) {
              data-ad-slot="<?php echo esc_attr( $slot ); ?>"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        <script>try{(adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}</script>
     </div>
     <?php
     $html = ob_get_clean();
