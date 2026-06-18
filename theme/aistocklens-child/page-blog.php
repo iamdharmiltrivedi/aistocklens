@@ -44,8 +44,7 @@ $blog_query = new WP_Query( $args );
             <!-- Main -->
             <main id="main">
 
-                <!-- AdSense -->
-                <div class="asl-ad-slot" aria-label="<?php esc_attr_e( 'Advertisement', 'aistocklens-child' ); ?>"></div>
+                <?php aslt_render_ad( 'page_top_2' ); // below page heading ?>
 
                 <!-- Category filter tabs -->
                 <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-8)">
@@ -64,7 +63,11 @@ $blog_query = new WP_Query( $args );
 
                 <?php if ( $blog_query->have_posts() ) : ?>
                 <div class="asl-grid asl-grid--2" style="--asl-col-min:280px">
-                    <?php while ( $blog_query->have_posts() ) : $blog_query->the_post(); ?>
+                    <?php
+                    $blog_post_count = 0;
+                    while ( $blog_query->have_posts() ) : $blog_query->the_post();
+                        $blog_post_count++;
+                    ?>
                     <article class="asl-article-card">
                         <?php if ( has_post_thumbnail() ) : ?>
                             <a href="<?php the_permalink(); ?>">
@@ -91,6 +94,11 @@ $blog_query = new WP_Query( $args );
                             </div>
                         </div>
                     </article>
+                    <?php if ( $blog_post_count % 5 === 0 && $blog_query->have_posts() ) : ?>
+                    <div class="aslt-ad-in-grid">
+                        <?php aslt_render_ad( 'middle' ); ?>
+                    </div>
+                    <?php endif; ?>
                     <?php endwhile; ?>
                 </div>
 
@@ -117,7 +125,7 @@ $blog_query = new WP_Query( $args );
                 </div>
 
                 <!-- Ad slot -->
-                <div class="asl-ad-slot" style="min-height:250px;margin:0 0 var(--space-6)" aria-label="<?php esc_attr_e( 'Advertisement', 'aistocklens-child' ); ?>"></div>
+                <?php aslt_render_ad( 'right_sidebar' ); ?>
 
                 <!-- Categories -->
                 <div class="asl-sidebar__widget">
@@ -152,6 +160,10 @@ $blog_query = new WP_Query( $args );
             </aside>
         </div>
     </div>
+</div>
+
+<div class="asl-container">
+    <?php aslt_render_ad( 'footer' ); ?>
 </div>
 
 <?php get_footer(); ?>

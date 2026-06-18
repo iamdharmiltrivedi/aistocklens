@@ -87,6 +87,11 @@ get_header();
     </div><!-- /.asl-container -->
 </section>
 
+<!-- Ad: Page Top 1 — below hero -->
+<div class="asl-container">
+    <?php aslt_render_ad( 'page_top_1' ); ?>
+</div>
+
 <!-- =====================================================================
      POPULAR CALCULATORS
      ===================================================================== -->
@@ -191,11 +196,9 @@ get_header();
     </div>
 </section>
 
-<!-- AdSense slot between sections -->
+<!-- Ad: Middle — after calculator grid -->
 <div class="asl-container">
-    <div class="asl-ad-slot" aria-label="<?php esc_attr_e( 'Advertisement', 'aistocklens-child' ); ?>">
-        <!-- AdSense code here -->
-    </div>
+    <?php aslt_render_ad( 'middle' ); ?>
 </div>
 
 <!-- =====================================================================
@@ -433,11 +436,9 @@ get_header();
     </div>
 </section>
 
-<!-- AdSense slot -->
+<!-- Ad: Page Bottom — before FAQ / footer -->
 <div class="asl-container">
-    <div class="asl-ad-slot" aria-label="<?php esc_attr_e( 'Advertisement', 'aistocklens-child' ); ?>">
-        <!-- AdSense code here -->
-    </div>
+    <?php aslt_render_ad( 'page_bottom' ); ?>
 </div>
 
 <!-- =====================================================================

@@ -63,13 +63,13 @@ $first_topic  = $has_topic ? $guide_topics[0] : null;
 
                 </header>
 
-                <div class="asl-ad-slot" aria-label="<?php esc_attr_e( 'Advertisement', 'aistocklens-child' ); ?>"></div>
+                <?php aslt_render_ad( 'page_top_1' ); // below title, above content ?>
 
                 <div class="entry-content">
                     <?php the_content(); ?>
                 </div>
 
-                <div class="asl-ad-slot" aria-label="<?php esc_attr_e( 'Advertisement', 'aistocklens-child' ); ?>"></div>
+                <?php aslt_render_ad( 'middle' ); // after content body ?>
 
                 <!-- Prev / Next within same topic -->
                 <div style="margin-top:var(--space-10);padding-top:var(--space-6);border-top:1px solid var(--color-border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4)">
@@ -92,7 +92,7 @@ $first_topic  = $has_topic ? $guide_topics[0] : null;
             <!-- Sidebar -->
             <aside class="asl-sidebar">
 
-                <div class="asl-ad-slot" style="min-height:250px;margin:0 0 var(--space-6)" aria-label="<?php esc_attr_e( 'Advertisement', 'aistocklens-child' ); ?>"></div>
+                <?php aslt_render_ad( 'right_sidebar' ); ?>
 
                 <div class="asl-sidebar__widget">
 
@@ -157,6 +157,11 @@ $first_topic  = $has_topic ? $guide_topics[0] : null;
 
         </div>
     </div>
+</div>
+
+<!-- Ad: Footer — after article -->
+<div class="asl-container">
+    <?php aslt_render_ad( 'footer' ); ?>
 </div>
 
 <?php get_footer(); ?>

@@ -28,7 +28,7 @@ $guides_archive_url = get_post_type_archive_link( 'guide' );
 
         <h1 style="margin-top:var(--space-4)"><?php echo esc_html( $current_term->name ); ?></h1>
 
-        <p style="color:rgba(255,255,255,.8);max-width:560px;margin-top:var(--space-3)">
+        <p style="margin-top:var(--space-3)">
             <?php
             if ( ! empty( $current_term->description ) ) {
                 echo esc_html( $current_term->description );

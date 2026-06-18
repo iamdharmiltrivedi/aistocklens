@@ -130,6 +130,21 @@ function aslc_body_classes( $classes ) {
 require_once ASLC_DIR . '/inc/schema.php';
 
 // -----------------------------------------------------------------------
+// 6b. ADSENSE AD SYSTEM  (loaded from inc/ads.php)
+// -----------------------------------------------------------------------
+require_once ASLC_DIR . '/inc/ads.php';
+
+// Inject the AdSense loader script once in <head> — only when ads are on.
+add_action( 'wp_head', 'aslc_adsense_loader', 1 );
+function aslc_adsense_loader() {
+    if ( ! ASLT_ENABLE_ADS ) {
+        return;
+    }
+    // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- AdSense requires async + crossorigin; wp_enqueue_script cannot add crossorigin natively before WP 6.3
+    echo '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' . esc_attr( ASLT_ADSENSE_PUBLISHER ) . '" crossorigin="anonymous"></script>' . "\n";
+}
+
+// -----------------------------------------------------------------------
 // 7. TEMPLATE HELPER FUNCTIONS
 // -----------------------------------------------------------------------
 

@@ -986,7 +986,31 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 .asl-learn-hero h1 { color: #fff; }
-.asl-learn-hero p { color: rgba(255,255,255,.8); }
+
+.asl-learn-hero p {
+    color: rgba(255,255,255,.8);
+    max-width: 600px;
+    margin-inline: auto; /* centers the block so text-align:center looks correct */
+}
+
+/* Breadcrumb inside any colored hero — override default dark-blue palette */
+.asl-learn-hero .asl-breadcrumb {
+    color: rgba(255,255,255,.7);
+    justify-content: center; /* align pills to match centered heading */
+}
+.asl-learn-hero .asl-breadcrumb a {
+    color: rgba(255,255,255,.9);
+}
+.asl-learn-hero .asl-breadcrumb a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+.asl-learn-hero .asl-breadcrumb__sep {
+    color: rgba(255,255,255,.45);
+}
+.asl-learn-hero .asl-breadcrumb [aria-current="page"] {
+    color: rgba(255,255,255,.65);
+}
 
 .asl-module-card {
     background: var(--color-surface);
@@ -1166,12 +1190,63 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* ============================================================
+   ADSENSE AD UNITS
+   ============================================================ */
+
+/** Base wrapper — all ad positions share this */
+.aslt-ad {
+    width: 100%;
+    overflow: hidden;
+    clear: both;
+    line-height: 0; /* collapse whitespace around <ins> */
+}
+
+/** Below hero / section headings */
+.aslt-ad-top {
+    margin-block: var(--space-8);
+}
+
+/** Mid-content or between grid rows */
+.aslt-ad-middle {
+    margin-block: var(--space-10);
+}
+
+/** Below main content (article end) */
+.aslt-ad-bottom {
+    margin-block: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+}
+
+/** Sidebar column */
+.aslt-ad-sidebar {
+    margin-bottom: var(--space-6);
+}
+
+/** Footer-area unit */
+.aslt-ad-footer {
+    margin-block: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+}
+
+/**
+ * In-grid full-width ad injected between card rows.
+ * Requires the ad wrapper to sit directly inside an .asl-grid container.
+ */
+.asl-grid > .aslt-ad-in-grid {
+    grid-column: 1 / -1;
+    margin-block: var(--space-2);
+}
+
+/* ============================================================
    PRINT STYLES
    ============================================================ */
 @media print {
     .asl-hero,
     .asl-footer,
-    .asl-ad-slot {
+    .asl-ad-slot,
+    .aslt-ad {
         display: none;
     }
 }

@@ -22,18 +22,20 @@ the_post();
         <div class="asl-blog-layout">
             <main>
                 <h1 style="margin-bottom:var(--space-2)"><?php the_title(); ?></h1>
-                <p style="color:var(--color-text-muted);margin-bottom:var(--space-8)"><?php the_excerpt(); ?></p>
+                <p style="color:var(--color-text-muted);margin-bottom:var(--space-4)"><?php the_excerpt(); ?></p>
+
+                <?php aslt_render_ad( 'page_top_1' ); // below calculator title ?>
 
                 <!-- The shortcode content (calculator) -->
                 <div class="asl-calc-wrapper">
                     <?php the_content(); ?>
                 </div>
 
-                <div class="asl-ad-slot" aria-label="<?php esc_attr_e( 'Advertisement', 'aistocklens-child' ); ?>"></div>
+                <?php aslt_render_ad( 'middle' ); // below calculator results ?>
             </main>
 
             <aside class="asl-sidebar">
-                <div class="asl-ad-slot" style="min-height:250px;margin:0 0 var(--space-6)" aria-label="<?php esc_attr_e( 'Advertisement', 'aistocklens-child' ); ?>"></div>
+                <?php aslt_render_ad( 'right_sidebar' ); ?>
                 <div class="asl-sidebar__widget">
                     <h3 class="asl-sidebar__widget-title"><?php esc_html_e( 'Other Calculators', 'aistocklens-child' ); ?></h3>
                     <ul class="asl-footer__links">
@@ -51,6 +53,11 @@ the_post();
             </aside>
         </div>
     </div>
+</div>
+
+<!-- Ad: Footer -->
+<div class="asl-container">
+    <?php aslt_render_ad( 'footer' ); ?>
 </div>
 
 <?php get_footer(); ?>
