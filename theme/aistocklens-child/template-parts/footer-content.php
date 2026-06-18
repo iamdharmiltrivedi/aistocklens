@@ -37,12 +37,12 @@ defined( 'ABSPATH' ) || exit;
             <div>
                 <h3 class="asl-footer__col-title"><?php esc_html_e( 'Calculators', 'aistocklens-child' ); ?></h3>
                 <ul class="asl-footer__links">
-                    <li><a href="<?php echo esc_url( home_url( '/calculators/sip-calculator/' ) ); ?>"><?php esc_html_e( 'SIP Calculator', 'aistocklens-child' ); ?></a></li>
-                    <li><a href="<?php echo esc_url( home_url( '/calculators/emi-calculator/' ) ); ?>"><?php esc_html_e( 'EMI Calculator', 'aistocklens-child' ); ?></a></li>
-                    <li><a href="<?php echo esc_url( home_url( '/calculators/fd-calculator/' ) ); ?>"><?php esc_html_e( 'FD Calculator', 'aistocklens-child' ); ?></a></li>
-                    <li><a href="<?php echo esc_url( home_url( '/calculators/cagr-calculator/' ) ); ?>"><?php esc_html_e( 'CAGR Calculator', 'aistocklens-child' ); ?></a></li>
-                    <li><a href="<?php echo esc_url( home_url( '/calculators/ppf-calculator/' ) ); ?>"><?php esc_html_e( 'PPF Calculator', 'aistocklens-child' ); ?></a></li>
-                    <li><a href="<?php echo esc_url( home_url( '/calculators/nps-calculator/' ) ); ?>"><?php esc_html_e( 'NPS Calculator', 'aistocklens-child' ); ?></a></li>
+                    <li><a href="<?php echo esc_url( home_url( '/sip-calculator/' ) ); ?>"><?php esc_html_e( 'SIP Calculator', 'aistocklens-child' ); ?></a></li>
+                    <li><a href="<?php echo esc_url( home_url( '/emi-calculator/' ) ); ?>"><?php esc_html_e( 'EMI Calculator', 'aistocklens-child' ); ?></a></li>
+                    <li><a href="<?php echo esc_url( home_url( '/fd-calculator/' ) ); ?>"><?php esc_html_e( 'FD Calculator', 'aistocklens-child' ); ?></a></li>
+                    <li><a href="<?php echo esc_url( home_url( '/rd-calculator/' ) ); ?>"><?php esc_html_e( 'RD Calculator', 'aistocklens-child' ); ?></a></li>
+                    <li><a href="<?php echo esc_url( home_url( '/lumpsum-calculator/' ) ); ?>"><?php esc_html_e( 'Lumpsum Calculator', 'aistocklens-child' ); ?></a></li>
+                    <li><a href="<?php echo esc_url( home_url( '/swp-calculator/' ) ); ?>"><?php esc_html_e( 'SWP Calculator', 'aistocklens-child' ); ?></a></li>
                 </ul>
             </div>
 

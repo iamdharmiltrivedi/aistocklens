@@ -39,12 +39,12 @@ the_post();
                 <div class="asl-sidebar__widget">
                     <h3 class="asl-sidebar__widget-title"><?php esc_html_e( 'Other Calculators', 'aistocklens-child' ); ?></h3>
                     <ul class="asl-footer__links">
-                        <li><a href="<?php echo esc_url( home_url( '/calculators/sip-calculator/' ) ); ?>">💰 SIP Calculator</a></li>
-                        <li><a href="<?php echo esc_url( home_url( '/calculators/emi-calculator/' ) ); ?>">🏦 EMI Calculator</a></li>
-                        <li><a href="<?php echo esc_url( home_url( '/calculators/fd-calculator/' ) ); ?>">🏧 FD Calculator</a></li>
-                        <li><a href="<?php echo esc_url( home_url( '/calculators/cagr-calculator/' ) ); ?>">📈 CAGR Calculator</a></li>
-                        <li><a href="<?php echo esc_url( home_url( '/calculators/ppf-calculator/' ) ); ?>">🏛️ PPF Calculator</a></li>
-                        <li><a href="<?php echo esc_url( home_url( '/calculators/nps-calculator/' ) ); ?>">👴 NPS Calculator</a></li>
+                        <li><a href="<?php echo esc_url( home_url( '/sip-calculator/' ) ); ?>">💰 SIP Calculator</a></li>
+                        <li><a href="<?php echo esc_url( home_url( '/emi-calculator/' ) ); ?>">🏦 EMI Calculator</a></li>
+                        <li><a href="<?php echo esc_url( home_url( '/fd-calculator/' ) ); ?>">🏧 FD Calculator</a></li>
+                        <li><a href="<?php echo esc_url( home_url( '/rd-calculator/' ) ); ?>">📅 RD Calculator</a></li>
+                        <li><a href="<?php echo esc_url( home_url( '/lumpsum-calculator/' ) ); ?>">💵 Lumpsum Calculator</a></li>
+                        <li><a href="<?php echo esc_url( home_url( '/swp-calculator/' ) ); ?>">💸 SWP Calculator</a></li>
                     </ul>
                 </div>
                 <?php if ( is_active_sidebar( 'asl-calc-sidebar' ) ) : ?>

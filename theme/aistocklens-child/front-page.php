@@ -112,7 +112,6 @@ get_header();
                     'title' => 'SIP Calculator',
                     'desc'  => 'Estimate returns on your monthly Systematic Investment Plan.',
                     'slug'  => 'sip-calculator',
-                    'sc'    => '[sip_calculator]',
                 ],
                 [
                     'icon'  => '🏦',
@@ -120,7 +119,6 @@ get_header();
                     'title' => 'EMI Calculator',
                     'desc'  => 'Calculate equated monthly instalments for home, car or personal loans.',
                     'slug'  => 'emi-calculator',
-                    'sc'    => '[emi_calculator]',
                 ],
                 [
                     'icon'  => '🏧',
@@ -128,7 +126,6 @@ get_header();
                     'title' => 'FD Calculator',
                     'desc'  => 'Find out maturity value of your Fixed Deposit at interest rate.',
                     'slug'  => 'fd-calculator',
-                    'sc'    => '[fd_calculator]',
                 ],
                 [
                     'icon'  => '📅',
@@ -136,44 +133,25 @@ get_header();
                     'title' => 'RD Calculator',
                     'desc'  => 'Plan your Recurring Deposit and forecast maturity amount.',
                     'slug'  => 'rd-calculator',
-                    'sc'    => '[rd_calculator]',
                 ],
                 [
-                    'icon'  => '📈',
-                    'bg'    => '#E0F7FA',
-                    'title' => 'CAGR Calculator',
-                    'desc'  => 'Measure Compound Annual Growth Rate of any investment.',
-                    'slug'  => 'cagr-calculator',
-                    'sc'    => '[cagr_calculator]',
+                    'icon'  => '💵',
+                    'bg'    => '#E0F2F1',
+                    'title' => 'Lumpsum Calculator',
+                    'desc'  => 'Estimate returns on a one-time lumpsum mutual fund investment.',
+                    'slug'  => 'lumpsum-calculator',
                 ],
                 [
-                    'icon'  => '🏛️',
-                    'bg'    => '#E8EAF6',
-                    'title' => 'PPF Calculator',
-                    'desc'  => 'Project Public Provident Fund corpus with yearly contributions.',
-                    'slug'  => 'ppf-calculator',
-                    'sc'    => '[ppf_calculator]',
-                ],
-                [
-                    'icon'  => '👴',
+                    'icon'  => '💸',
                     'bg'    => '#FBE9E7',
-                    'title' => 'NPS Calculator',
-                    'desc'  => 'Estimate your National Pension Scheme retirement corpus.',
-                    'slug'  => 'nps-calculator',
-                    'sc'    => '[nps_calculator]',
-                ],
-                [
-                    'icon'  => '🌅',
-                    'bg'    => '#F1F8E9',
-                    'title' => 'Retirement Calculator',
-                    'desc'  => 'Plan how much you need to retire comfortably at your target age.',
-                    'slug'  => 'retirement-calculator',
-                    'sc'    => '[retirement_calculator]',
+                    'title' => 'SWP Calculator',
+                    'desc'  => 'Calculate Systematic Withdrawal Plan payouts from your corpus.',
+                    'slug'  => 'swp-calculator',
                 ],
             ];
 
             foreach ( $calculators as $calc ) :
-                $url = get_permalink( get_page_by_path( $calc['slug'] ) ) ?: home_url( '/calculators/' . $calc['slug'] . '/' );
+                $url = get_permalink( get_page_by_path( $calc['slug'] ) ) ?: home_url( '/' . $calc['slug'] . '/' );
             ?>
             <a href="<?php echo esc_url( $url ); ?>" class="asl-calc-card">
                 <div class="asl-calc-card__icon" style="background:<?php echo esc_attr( $calc['bg'] ); ?>">

@@ -161,12 +161,12 @@ function aslc_primary_nav_fallback() {
 
 function aslc_footer_calc_fallback() {
     $items = [
-        '💰 SIP Calculator'  => '/calculators/sip-calculator/',
-        '🏦 EMI Calculator'  => '/calculators/emi-calculator/',
-        '🏧 FD Calculator'   => '/calculators/fd-calculator/',
-        '📈 CAGR Calculator' => '/calculators/cagr-calculator/',
-        '🏛️ PPF Calculator'  => '/calculators/ppf-calculator/',
-        '👴 NPS Calculator'  => '/calculators/nps-calculator/',
+        '💰 SIP Calculator'     => '/sip-calculator/',
+        '🏦 EMI Calculator'     => '/emi-calculator/',
+        '🏧 FD Calculator'      => '/fd-calculator/',
+        '📅 RD Calculator'      => '/rd-calculator/',
+        '💵 Lumpsum Calculator' => '/lumpsum-calculator/',
+        '💸 SWP Calculator'     => '/swp-calculator/',
     ];
     echo '<ul class="asl-footer__links">';
     foreach ( $items as $label => $path ) {
