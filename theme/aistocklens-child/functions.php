@@ -151,6 +151,7 @@ function aslc_section_head( $eyebrow, $title, $subtitle = '' ) {
 
 /**
  * Render a breadcrumb trail.
+ * Handles: lesson, guide, guide_topic taxonomy, lesson_category taxonomy, generic archive/singular.
  */
 function aslc_breadcrumbs() {
     echo '<nav class="asl-breadcrumb" aria-label="' . esc_attr__( 'Breadcrumb', 'aistocklens-child' ) . '">';
@@ -158,18 +159,46 @@ function aslc_breadcrumbs() {
     echo '<span class="asl-breadcrumb__sep" aria-hidden="true">›</span>';
 
     if ( is_singular( 'lesson' ) ) {
+        // Home › Learn › [Category] › Title
         echo '<a href="' . esc_url( get_post_type_archive_link( 'lesson' ) ) . '">' . esc_html__( 'Learn', 'aistocklens-child' ) . '</a>';
         echo '<span class="asl-breadcrumb__sep" aria-hidden="true">›</span>';
-    }
-    if ( is_singular( 'guide' ) ) {
+        $lesson_cats = get_the_terms( get_the_ID(), 'lesson_category' );
+        if ( ! is_wp_error( $lesson_cats ) && ! empty( $lesson_cats ) ) {
+            echo '<a href="' . esc_url( get_term_link( $lesson_cats[0] ) ) . '">' . esc_html( $lesson_cats[0]->name ) . '</a>';
+            echo '<span class="asl-breadcrumb__sep" aria-hidden="true">›</span>';
+        }
+        echo '<span aria-current="page">' . esc_html( get_the_title() ) . '</span>';
+
+    } elseif ( is_singular( 'guide' ) ) {
+        // Home › Guides › [Topic] › Title
         echo '<a href="' . esc_url( get_post_type_archive_link( 'guide' ) ) . '">' . esc_html__( 'Guides', 'aistocklens-child' ) . '</a>';
         echo '<span class="asl-breadcrumb__sep" aria-hidden="true">›</span>';
-    }
-    if ( is_singular() || is_page() ) {
+        $gtopics = get_the_terms( get_the_ID(), 'guide_topic' );
+        if ( ! is_wp_error( $gtopics ) && ! empty( $gtopics ) ) {
+            echo '<a href="' . esc_url( get_term_link( $gtopics[0] ) ) . '">' . esc_html( $gtopics[0]->name ) . '</a>';
+            echo '<span class="asl-breadcrumb__sep" aria-hidden="true">›</span>';
+        }
         echo '<span aria-current="page">' . esc_html( get_the_title() ) . '</span>';
+
+    } elseif ( is_tax( 'guide_topic' ) ) {
+        // Home › Guides › Topic Name
+        echo '<a href="' . esc_url( get_post_type_archive_link( 'guide' ) ) . '">' . esc_html__( 'Guides', 'aistocklens-child' ) . '</a>';
+        echo '<span class="asl-breadcrumb__sep" aria-hidden="true">›</span>';
+        echo '<span aria-current="page">' . esc_html( single_term_title( '', false ) ) . '</span>';
+
+    } elseif ( is_tax( 'lesson_category' ) ) {
+        // Home › Learn › Category Name
+        echo '<a href="' . esc_url( get_post_type_archive_link( 'lesson' ) ) . '">' . esc_html__( 'Learn', 'aistocklens-child' ) . '</a>';
+        echo '<span class="asl-breadcrumb__sep" aria-hidden="true">›</span>';
+        echo '<span aria-current="page">' . esc_html( single_term_title( '', false ) ) . '</span>';
+
+    } elseif ( is_singular() || is_page() ) {
+        echo '<span aria-current="page">' . esc_html( get_the_title() ) . '</span>';
+
     } elseif ( is_archive() ) {
         echo '<span>' . esc_html( post_type_archive_title( '', false ) ) . '</span>';
     }
+
     echo '</nav>';
 }
 

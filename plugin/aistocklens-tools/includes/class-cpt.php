@@ -11,13 +11,14 @@ class ASLT_CPT {
 
     public static function init() {
         add_action( 'init', [ __CLASS__, 'register_all' ] );
+        add_filter( 'post_type_link', [ __CLASS__, 'guide_permalink' ], 10, 2 );
     }
 
     public static function register_all() {
+        self::register_taxonomies(); // Taxonomies first so %guide_topic% tag is available for CPT permastruct
         self::register_lessons();
         self::register_calculators();
         self::register_guides();
-        self::register_taxonomies();
     }
 
     // -----------------------------------------------------------------------
@@ -87,6 +88,7 @@ class ASLT_CPT {
 
     // -----------------------------------------------------------------------
     // GUIDES
+    // URL: /guides/{topic-slug}/{guide-slug}/
     // -----------------------------------------------------------------------
     private static function register_guides() {
         $labels = [
@@ -96,7 +98,11 @@ class ASLT_CPT {
             'add_new'            => __( 'Add New', 'aistocklens-tools' ),
             'add_new_item'       => __( 'Add New Guide', 'aistocklens-tools' ),
             'edit_item'          => __( 'Edit Guide', 'aistocklens-tools' ),
+            'new_item'           => __( 'New Guide', 'aistocklens-tools' ),
+            'view_item'          => __( 'View Guide', 'aistocklens-tools' ),
+            'search_items'       => __( 'Search Guides', 'aistocklens-tools' ),
             'not_found'          => __( 'No guides found', 'aistocklens-tools' ),
+            'not_found_in_trash' => __( 'No guides in trash', 'aistocklens-tools' ),
         ];
 
         register_post_type( 'guide', [
@@ -109,7 +115,7 @@ class ASLT_CPT {
             'menu_position'   => 7,
             'supports'        => [ 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes', 'author', 'revisions' ],
             'has_archive'     => 'guides',
-            'rewrite'         => [ 'slug' => 'guides', 'with_front' => false ],
+            'rewrite'         => [ 'slug' => 'guides/%guide_topic%', 'with_front' => false ],
             'hierarchical'    => false,
             'capability_type' => 'post',
             'taxonomies'      => [ 'guide_topic' ],
@@ -130,20 +136,52 @@ class ASLT_CPT {
             'public'            => true,
             'hierarchical'      => true,
             'show_in_rest'      => true,
-            'rewrite'           => [ 'slug' => 'learn/category' ],
+            'show_admin_column' => true,
+            'rewrite'           => [ 'slug' => 'learn/category', 'with_front' => false ],
         ] );
 
-        // Guide Topic
+        // Guide Topic — archive at /guides/{topic-slug}/
         register_taxonomy( 'guide_topic', 'guide', [
             'labels'            => [
                 'name'          => __( 'Guide Topics', 'aistocklens-tools' ),
                 'singular_name' => __( 'Guide Topic', 'aistocklens-tools' ),
                 'menu_name'     => __( 'Topics', 'aistocklens-tools' ),
+                'add_new_item'  => __( 'Add New Topic', 'aistocklens-tools' ),
+                'edit_item'     => __( 'Edit Topic', 'aistocklens-tools' ),
+                'update_item'   => __( 'Update Topic', 'aistocklens-tools' ),
+                'search_items'  => __( 'Search Topics', 'aistocklens-tools' ),
+                'all_items'     => __( 'All Topics', 'aistocklens-tools' ),
+                'not_found'     => __( 'No topics found', 'aistocklens-tools' ),
             ],
             'public'            => true,
             'hierarchical'      => true,
             'show_in_rest'      => true,
-            'rewrite'           => [ 'slug' => 'guides/topic' ],
+            'show_admin_column' => true,
+            'rewrite'           => [
+                'slug'         => 'guides',
+                'with_front'   => false,
+                'hierarchical' => false, // /guides/{term-slug}/ even for child terms
+            ],
         ] );
+    }
+
+    // -----------------------------------------------------------------------
+    // PERMALINK FILTER — replaces %guide_topic% in guide URLs
+    // Produces: /guides/{topic-slug}/{guide-slug}/
+    // -----------------------------------------------------------------------
+    public static function guide_permalink( $post_link, $post ) {
+        if ( 'guide' !== get_post_type( $post ) ) {
+            return $post_link;
+        }
+        if ( false === strpos( $post_link, '%guide_topic%' ) ) {
+            return $post_link;
+        }
+        $terms = get_the_terms( $post->ID, 'guide_topic' );
+        if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+            $slug = $terms[0]->slug;
+        } else {
+            $slug = 'uncategorized';
+        }
+        return str_replace( '%guide_topic%', $slug, $post_link );
     }
 }

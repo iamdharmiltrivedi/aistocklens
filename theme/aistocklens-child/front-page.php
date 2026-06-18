@@ -199,91 +199,97 @@ get_header();
 </div>
 
 <!-- =====================================================================
-     LEARNING PATHS
+     GUIDE TOPICS  (dynamic — managed from Admin › Guides › Topics)
      ===================================================================== -->
 <section class="asl-section asl-section--alt" id="learn">
     <div class="asl-container">
         <?php aslc_section_head(
             __( 'Education', 'aistocklens-child' ),
-            __( 'Learning Paths', 'aistocklens-child' ),
-            __( 'Structured courses to go from zero to investing-confident.', 'aistocklens-child' )
+            __( 'Guides by Topic', 'aistocklens-child' ),
+            __( 'Curated guide collections to help you master investing topics step by step.', 'aistocklens-child' )
         ); ?>
 
+        <?php
+        $hp_topics = get_terms( [
+            'taxonomy'   => 'guide_topic',
+            'hide_empty' => true,
+            'orderby'    => 'count',
+            'order'      => 'DESC',
+        ] );
+
+        if ( ! is_wp_error( $hp_topics ) && ! empty( $hp_topics ) ) :
+            $topic_idx = 0;
+        ?>
         <div class="asl-grid asl-grid--2">
+            <?php foreach ( $hp_topics as $hp_topic ) :
+                $is_even      = ( $topic_idx % 2 === 0 );
+                $header_class = $is_even ? '' : 'asl-path-card__header--green';
+                $btn_class    = $is_even ? 'asl-btn--primary' : 'asl-btn--accent';
+                $topic_idx++;
 
-            <!-- Mutual Fund Academy -->
+                $topic_guides_q = new WP_Query( [
+                    'post_type'      => 'guide',
+                    'posts_per_page' => 6,
+                    'post_status'    => 'publish',
+                    'tax_query'      => [ [
+                        'taxonomy' => 'guide_topic',
+                        'field'    => 'term_id',
+                        'terms'    => $hp_topic->term_id,
+                    ] ],
+                    'orderby'        => 'menu_order date',
+                    'order'          => 'ASC',
+                    'no_found_rows'  => true,
+                ] );
+            ?>
             <div class="asl-path-card">
-                <div class="asl-path-card__header">
-                    <span class="asl-path-card__icon">💼</span>
-                    <h3 class="asl-path-card__title"><?php esc_html_e( 'Mutual Fund Academy', 'aistocklens-child' ); ?></h3>
-                    <p class="asl-path-card__subtitle"><?php esc_html_e( '6 lessons · Beginner friendly', 'aistocklens-child' ); ?></p>
+                <div class="asl-path-card__header <?php echo esc_attr( $header_class ); ?>">
+                    <h3 class="asl-path-card__title"><?php echo esc_html( $hp_topic->name ); ?></h3>
+                    <p class="asl-path-card__subtitle">
+                        <?php printf(
+                            esc_html( _n( '%d Guide', '%d Guides', $hp_topic->count, 'aistocklens-child' ) ),
+                            (int) $hp_topic->count
+                        ); ?>
+                    </p>
                 </div>
+
+                <?php if ( $topic_guides_q->have_posts() ) : ?>
                 <ul class="asl-path-card__lessons">
-                    <?php
-                    $mf_lessons = [
-                        [ 'What is a Mutual Fund?',  'what-is-mutual-fund' ],
-                        [ 'Types of Mutual Funds',   'types-of-mutual-funds' ],
-                        [ 'Understanding NAV',        'understanding-nav' ],
-                        [ 'How SIP Works',            'how-sip-works' ],
-                        [ 'Expense Ratio Explained',  'expense-ratio' ],
-                        [ 'Asset Allocation Strategy','asset-allocation' ],
-                    ];
-                    foreach ( $mf_lessons as $i => $lesson ) :
-                        $url = get_permalink( get_page_by_path( 'learn/mutual-funds/' . $lesson[1] ) )
-                               ?: home_url( '/learn/mutual-funds/' . $lesson[1] . '/' );
-                    ?>
+                    <?php $guide_num = 1; while ( $topic_guides_q->have_posts() ) : $topic_guides_q->the_post(); ?>
                     <li>
-                        <a href="<?php echo esc_url( $url ); ?>" class="asl-path-card__lesson">
-                            <span class="asl-path-card__lesson-num"><?php echo esc_html( $i + 1 ); ?></span>
-                            <?php echo esc_html( $lesson[0] ); ?>
+                        <a href="<?php the_permalink(); ?>" class="asl-path-card__lesson">
+                            <span class="asl-path-card__lesson-num"><?php echo esc_html( $guide_num++ ); ?></span>
+                            <?php the_title(); ?>
                         </a>
                     </li>
-                    <?php endforeach; ?>
+                    <?php endwhile; wp_reset_postdata(); ?>
                 </ul>
+                <?php endif; ?>
+
                 <div class="asl-path-card__footer">
-                    <a href="<?php echo esc_url( home_url( '/learn/mutual-funds/' ) ); ?>" class="asl-btn asl-btn--primary" style="width:100%;justify-content:center">
-                        <?php esc_html_e( 'Start Mutual Fund Course', 'aistocklens-child' ); ?>
+                    <a href="<?php echo esc_url( get_term_link( $hp_topic ) ); ?>"
+                       class="asl-btn <?php echo esc_attr( $btn_class ); ?>"
+                       style="width:100%;justify-content:center">
+                        <?php
+                        /* translators: %s: topic name */
+                        printf( esc_html__( 'View All %s Guides', 'aistocklens-child' ), esc_html( $hp_topic->name ) );
+                        ?> →
                     </a>
                 </div>
             </div>
-
-            <!-- Stock Market Academy -->
-            <div class="asl-path-card">
-                <div class="asl-path-card__header asl-path-card__header--green">
-                    <span class="asl-path-card__icon">📊</span>
-                    <h3 class="asl-path-card__title"><?php esc_html_e( 'Stock Market Academy', 'aistocklens-child' ); ?></h3>
-                    <p class="asl-path-card__subtitle"><?php esc_html_e( '6 lessons · Beginner friendly', 'aistocklens-child' ); ?></p>
-                </div>
-                <ul class="asl-path-card__lessons">
-                    <?php
-                    $stock_lessons = [
-                        [ 'What is a Stock?',          'what-is-a-stock' ],
-                        [ 'Opening a Demat Account',   'demat-account' ],
-                        [ 'P/E Ratio Explained',       'pe-ratio' ],
-                        [ 'EPS — Earnings Per Share',  'eps-explained' ],
-                        [ 'Return on Equity (ROE)',     'roe-explained' ],
-                        [ 'Fundamental Analysis',       'fundamental-analysis' ],
-                    ];
-                    foreach ( $stock_lessons as $i => $lesson ) :
-                        $url = get_permalink( get_page_by_path( 'learn/stocks/' . $lesson[1] ) )
-                               ?: home_url( '/learn/stocks/' . $lesson[1] . '/' );
-                    ?>
-                    <li>
-                        <a href="<?php echo esc_url( $url ); ?>" class="asl-path-card__lesson">
-                            <span class="asl-path-card__lesson-num"><?php echo esc_html( $i + 1 ); ?></span>
-                            <?php echo esc_html( $lesson[0] ); ?>
-                        </a>
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
-                <div class="asl-path-card__footer">
-                    <a href="<?php echo esc_url( home_url( '/learn/stocks/' ) ); ?>" class="asl-btn asl-btn--accent" style="width:100%;justify-content:center">
-                        <?php esc_html_e( 'Start Stock Market Course', 'aistocklens-child' ); ?>
-                    </a>
-                </div>
-            </div>
-
+            <?php endforeach; ?>
         </div><!-- /.asl-grid -->
+
+        <?php else : ?>
+        <p class="text-center text-muted">
+            <?php esc_html_e( 'Guide topics coming soon. Go to WordPress Admin › Guides › Topics to add your first topic.', 'aistocklens-child' ); ?>
+        </p>
+        <?php endif; ?>
+
+        <div class="text-center" style="margin-top:var(--space-10)">
+            <a href="<?php echo esc_url( home_url( '/guides/' ) ); ?>" class="asl-btn asl-btn--outline">
+                <?php esc_html_e( 'Browse All Guides', 'aistocklens-child' ); ?> →
+            </a>
+        </div>
     </div>
 </section>
 
