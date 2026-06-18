@@ -134,6 +134,74 @@ require_once ASLC_DIR . '/inc/schema.php';
 // -----------------------------------------------------------------------
 require_once ASLC_DIR . '/inc/ads.php';
 
+// Favicon — served from theme assets, bypasses Customizer.
+add_action( 'wp_head', 'aslc_favicon', 1 );
+function aslc_favicon() {
+    $uri = get_stylesheet_directory_uri() . '/assets/images/favicon.png';
+    echo '<link rel="icon" type="image/png" href="' . esc_url( $uri ) . '">' . "\n";
+    echo '<link rel="apple-touch-icon" href="' . esc_url( $uri ) . '">' . "\n";
+}
+
+// -----------------------------------------------------------------------
+// 6c. NAV FALLBACKS (used when no menu is assigned in Appearance → Menus)
+// -----------------------------------------------------------------------
+
+function aslc_primary_nav_fallback() {
+    $items = [
+        __( 'Blog',        'aistocklens-child' ) => home_url( '/blog/' ),
+        __( 'Guides',      'aistocklens-child' ) => home_url( '/guides/' ),
+        __( 'Calculators', 'aistocklens-child' ) => home_url( '/calculators/' ),
+    ];
+    echo '<ul class="asl-masthead__menu">';
+    foreach ( $items as $label => $url ) {
+        printf( '<li><a href="%s">%s</a></li>', esc_url( $url ), esc_html( $label ) );
+    }
+    echo '</ul>';
+}
+
+function aslc_footer_calc_fallback() {
+    $items = [
+        '💰 SIP Calculator'  => '/calculators/sip-calculator/',
+        '🏦 EMI Calculator'  => '/calculators/emi-calculator/',
+        '🏧 FD Calculator'   => '/calculators/fd-calculator/',
+        '📈 CAGR Calculator' => '/calculators/cagr-calculator/',
+        '🏛️ PPF Calculator'  => '/calculators/ppf-calculator/',
+        '👴 NPS Calculator'  => '/calculators/nps-calculator/',
+    ];
+    echo '<ul class="asl-footer__links">';
+    foreach ( $items as $label => $path ) {
+        printf( '<li><a href="%s">%s</a></li>', esc_url( home_url( $path ) ), esc_html( $label ) );
+    }
+    echo '</ul>';
+}
+
+function aslc_footer_learn_fallback() {
+    $items = [
+        __( 'Investment Guides', 'aistocklens-child' ) => '/guides/',
+        __( 'Blog',              'aistocklens-child' ) => '/blog/',
+        __( 'Learn',             'aistocklens-child' ) => '/learn/',
+    ];
+    echo '<ul class="asl-footer__links">';
+    foreach ( $items as $label => $path ) {
+        printf( '<li><a href="%s">%s</a></li>', esc_url( home_url( $path ) ), esc_html( $label ) );
+    }
+    echo '</ul>';
+}
+
+function aslc_footer_company_fallback() {
+    $items = [
+        __( 'About Us',      'aistocklens-child' ) => '/about/',
+        __( 'Contact',       'aistocklens-child' ) => '/contact/',
+        __( 'Privacy Policy','aistocklens-child' ) => '/privacy-policy/',
+        __( 'Disclaimer',    'aistocklens-child' ) => '/disclaimer/',
+    ];
+    echo '<ul class="asl-footer__links">';
+    foreach ( $items as $label => $path ) {
+        printf( '<li><a href="%s">%s</a></li>', esc_url( home_url( $path ) ), esc_html( $label ) );
+    }
+    echo '</ul>';
+}
+
 // Inject the AdSense loader script once in <head> — only when ads are on.
 add_action( 'wp_head', 'aslc_adsense_loader', 1 );
 function aslc_adsense_loader() {
